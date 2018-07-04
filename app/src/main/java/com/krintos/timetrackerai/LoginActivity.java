@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,9 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.krintos.timetrackerai.Database.SQLiteHandler;
+import com.krintos.timetrackerai.Connection.Connection;
 import com.krintos.timetrackerai.Helper.AppConfig;
 import com.krintos.timetrackerai.Helper.AppController;
+import com.krintos.timetrackerai.Models.User;
+import com.krintos.timetrackerai.Services.UserService;
 import com.krintos.timetrackerai.SessionManager.SessionManager;
 
 import org.json.JSONException;
@@ -34,14 +37,15 @@ public class LoginActivity extends AppCompatActivity {
     private EditText phonenumber, pincode;
     private Button send, confrim;
     private ProgressDialog pDialog;
-    private SQLiteHandler db;
     private String phone, pin;
-
+    private Connection connection;
+    private UserService userService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        db = new SQLiteHandler(getApplicationContext());
+        userService = new UserService();
+        connection = new Connection(getApplicationContext());
         phonenumber = findViewById(R.id.phonenumber);
         pincode = findViewById(R.id.pincode);
         send = findViewById(R.id.send);
@@ -83,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void confirm() {
+        connection.checconnectivity(this);
         showDialog();
         pDialog.setMessage(""+getString(R.string.waitphone));
         String tag_string_req = "req_login";
@@ -97,17 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                     hideDialog();
                     jObj = new JSONObject(response);
                     String token  = jObj.getString("token");
-                    boolean store = db.storeuser(phone,token,SQLiteHandler.TABLE_USER);
-                    if (store){
-                        View view = getCurrentFocus();
-                        if (view != null) {
-                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        }
-                        login();
-                    }else {
-                        Toast.makeText(LoginActivity.this, ""+getString(R.string.couldntstore), Toast.LENGTH_LONG).show();
-                    }
+                    userService.saveUser(phone,token);
+                    login();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -123,12 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                 hideDialog();
             }
         }) {
-            /*@Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String , String > params = new HashMap<>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                return params;
-            }*/
 
             @Override
             protected Map<String, String> getParams() {
@@ -148,7 +139,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendphonenumber(final String phone) {
-        String tag_string_req = "req_login";
+        connection.checconnectivity(this);
+        String tag_string_req = "request_pin";
 
         showDialog();
         pDialog.setMessage(""+getString(R.string.waitphone));

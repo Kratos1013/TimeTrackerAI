@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.krintos.timetrackerai.Permissions.Permissions">
+    <HorizontalScrollView
+        android:id="@+id/horizontalScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/permissionforlocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/location"
+            android:layout_gravity="bottom"
+            android:text="@string/givepermission"
+            android:layout_marginBottom="@dimen/permissionbuttonmarginbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/permissiontoreadstorage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/storage"
+            android:layout_marginBottom="@dimen/permissionbuttonmarginbottom"
+            android:layout_width="match_parent"
+            android:text="@string/givepermission"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/permission2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/permissionbuttonmarginbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/permission3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/permissionbuttonmarginbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/permission4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/permissionbuttonmarginbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

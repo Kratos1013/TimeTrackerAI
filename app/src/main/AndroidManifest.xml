@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.krintos.timetrackerai">
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
     <application
         android:name=".Helper.AppController"
         android:allowBackup="true"
@@ -11,6 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.krintos.timetrackerai"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
+        <meta-data android:name="AA_DB_NAME" android:value="TimeTrackerAI.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data android:name="AA_MODELS"
+            android:value="com.krintos.timetrackerai.Models.User">
+        </meta-data>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -20,7 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".Permissions.Permissions" />
+        <activity android:name=".Connection.ErrorController"></activity>
     </application>
 
 </manifest>

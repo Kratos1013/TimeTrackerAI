@@ -28,6 +28,10 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }
