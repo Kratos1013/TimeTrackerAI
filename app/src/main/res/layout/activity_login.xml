@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.krintos.timetrackerai.LoginActivity">
+    tools:context="com.krintos.timetrackerai.LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryCodePicker"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/login_et_margin"
+        android:layout_marginRight="@dimen/login_et_margin"
+        android:layout_height="wrap_content"
+        app:ccp_countryPreference="RU,US"
+        app:ccp_defaultLanguage="ENGLISH"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_countryAutoDetectionPref="NETWORK_SIM_LOCALE">
+    </com.hbb20.CountryCodePicker>
     <EditText
+        android:layout_margin="@dimen/login_et_margin"
+        android:background="@drawable/round_login_et"
         android:hint="@string/enteryourphonenumber"
         android:id="@+id/phonenumber"
+        android:textAlignment="center"
         android:inputType="phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="45dp" />
     <Button
         android:id="@+id/send"
         android:text="@string/send"
+        android:background="@drawable/round_login_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <EditText
         android:visibility="gone"
         android:id="@+id/pincode"
         android:inputType="number"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/round_login_et"
+        android:layout_margin="@dimen/login_et_margin"
         android:hint="@string/pinhint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="45dp" />
     <Button
         android:visibility="gone"
         android:id="@+id/confirm"
         android:text="@string/confirm"
+        android:background="@drawable/round_login_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

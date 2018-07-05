@@ -5,7 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="enteryourphonenumber">Enter your phone number here</string>
     <string name="send">SEND</string>
-    <string name="pinhint">--- ---</string>
+    <string name="pinhint">Enter PIN here</string>
     <string name="confirm">CONFIRM</string>
     <string name="waitphone">Verifying phone number</string>
     <string name="couldntstore">Could not store user in database, please retry</string>
@@ -15,4 +15,9 @@
     <string name="givepermission">Give Permission</string>
     <string name="statistics">Statistics</string>
     <string name="profile">Profile</string>
+    <string name="emptyphone">Please enter your phone number</string>
+    <string name="emptypin">Please enter PIN</string>
+    <string name="logininproccess">Loging in ...</string>
+    <string name="ex_storage_permission">We need permission to get access to your files. In case you can not upload files to our server.</string>
+    <string name="ex_location_permission">We need permission to get access to your geolocation. In case application can not get enough datas to work</string>
 </resources>

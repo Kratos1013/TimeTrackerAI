@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
         ActiveAndroid.initialize(this);
         us = new UserSession(getApplicationContext());
         session = new SessionManager(getApplicationContext());

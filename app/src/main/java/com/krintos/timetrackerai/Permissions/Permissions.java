@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.krintos.timetrackerai.LoginActivity;
@@ -23,7 +24,6 @@ import com.krintos.timetrackerai.R;
 import java.util.Map;
 
 public class Permissions extends Activity {
-    private FrameLayout p,p1,p2,p3,p4;
     private HorizontalScrollView horizontalScrollView;
     private Button b,b1,b2,b3,b4;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -34,14 +34,12 @@ public class Permissions extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
         horizontalScrollView = findViewById(R.id.horizontalScroll);
-        p = findViewById(R.id.permissionforlocation);
-        b = findViewById(R.id.location);
-        p1 = findViewById(R.id.permissiontoreadstorage);
-        b1 = findViewById(R.id.storage);
+        b1 = findViewById(R.id.location);
+        b = findViewById(R.id.storage);
         grantedall();
-        focusOnView();
+        autoSmoothScrollfirst(b);
         // Here, thisActivity is the current activity
-        b.setOnClickListener(new View.OnClickListener() {
+        b1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
@@ -49,7 +47,7 @@ public class Permissions extends Activity {
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
         });
-        b1.setOnClickListener(new View.OnClickListener() {
+        b.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
@@ -60,19 +58,19 @@ public class Permissions extends Activity {
 
     }
 
-
-    private final void focusOnView(){
-        horizontalScrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                horizontalScrollView.scrollTo(0, p1.getBottom());
-            }
-        });
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
+
+            case MY_PERMISSIONS_REQUEST_STORAGE:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    grantedall();
+                    autoSmoothScroll(b1);
+                }else {
+                }
+                return;
+            }
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -84,15 +82,6 @@ public class Permissions extends Activity {
                 }
                 return;
             }
-            case MY_PERMISSIONS_REQUEST_STORAGE:{
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    grantedall();
-                }else {
-
-                }
-                return;
-            }
-
             // other 'case' lines to check for other
             // permissions this app might request.
         }
@@ -106,10 +95,36 @@ public class Permissions extends Activity {
             Intent intent = new Intent(Permissions.this, MainActivity.class);
             startActivity(intent);
             finish();
-            //permission is not granted. ask permission
-
-
         }
     }
+
+
+    public void autoSmoothScroll(final Button button) {
+
+        horizontalScrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //hsv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                int vLeft = button.getTop();
+                int vRight = button.getBottom();
+                int sWidth = horizontalScrollView.getWidth();
+                horizontalScrollView.smoothScrollTo(((vLeft + vRight - sWidth) / 2), 0);
+            }
+        },100);
+    }
+    public void autoSmoothScrollfirst(final Button button) {
+
+        horizontalScrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //hsv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                int vLeft = button.getLeft();
+                int vRight = button.getRight();
+                int sWidth = horizontalScrollView.getWidth();
+                horizontalScrollView.smoothScrollTo(((vLeft + vRight - sWidth) / 2), 0);
+            }
+        },100);
+    }
+
 
 }

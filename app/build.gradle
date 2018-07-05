@@ -35,4 +35,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    implementation 'com.hbb20:ccp:2.2.2'
 }
