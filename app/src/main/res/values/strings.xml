@@ -20,4 +20,7 @@
     <string name="logininproccess">Loging in ...</string>
     <string name="ex_storage_permission">We need permission to get access to your files. In case you can not upload files to our server.</string>
     <string name="ex_location_permission">We need permission to get access to your geolocation. In case application can not get enough datas to work</string>
+    <string name="oops">Ooops, something went wrong</string>
+    <string name="retry">Retry</string>
+    <string name="edit">EDIT</string>
 </resources>

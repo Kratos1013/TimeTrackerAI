@@ -1,6 +1,5 @@
 package com.krintos.timetrackerai;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,12 +19,14 @@ import com.hbb20.CountryCodePicker;
 import com.krintos.timetrackerai.Connection.Connection;
 import com.krintos.timetrackerai.Helper.AppConfig;
 import com.krintos.timetrackerai.Helper.AppController;
+import com.krintos.timetrackerai.Models.User;
 import com.krintos.timetrackerai.Services.UserService;
 import com.krintos.timetrackerai.SessionManager.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class LoginActivity extends AppCompatActivity {
     private SessionManager session;
@@ -35,14 +36,15 @@ public class LoginActivity extends AppCompatActivity {
     private String phone, pin;
     private Connection connection;
     private UserService userService;
+    private User user;
     private CountryCodePicker ccp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
 
         userService = new UserService();
+        user  = new User();
         connection = new Connection(getApplicationContext());
         phonenumber = findViewById(R.id.phonenumber);
         pincode = findViewById(R.id.pincode);
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (phone.length()< 4){
                     Toast.makeText(LoginActivity.this, ""+getString(R.string.emptyphone), Toast.LENGTH_SHORT).show();
                 }else {
-                    sendphonenumber(phone);
+                    sendphonenumber(ccp.getFullNumberWithPlus());
                 }
             }
         });

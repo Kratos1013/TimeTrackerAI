@@ -86,18 +86,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
         ActiveAndroid.initialize(this);
         us = new UserSession(getApplicationContext());
         session = new SessionManager(getApplicationContext());
         pDialog = new ProgressDialog(this);
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        if (!session.isLoggedIn()) {
-            us.logoutUser();
-        }
         grantedall();
+        if (!session.isLoggedIn()) {
+            us.logoutUser(MainActivity.this);
+        }else {
+
+        }
         pDialog.setCancelable(false);
     }
 

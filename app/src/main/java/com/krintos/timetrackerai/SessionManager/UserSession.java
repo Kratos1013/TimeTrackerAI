@@ -1,5 +1,6 @@
 package com.krintos.timetrackerai.SessionManager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +15,9 @@ import com.krintos.timetrackerai.Helper.AppConfig;
 import com.krintos.timetrackerai.Helper.AppController;
 import com.krintos.timetrackerai.Models.User;
 import com.krintos.timetrackerai.LoginActivity;
-import com.krintos.timetrackerai.MainActivity;
 import com.krintos.timetrackerai.R;
 import com.krintos.timetrackerai.Services.UserService;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,20 +28,20 @@ import java.util.Map;
 
 public class UserSession  {
     Context context;
-    private MainActivity mainActivity;
     private Profile profile;
     private SessionManager session;
     private ProgressDialog pDialog;
     private UserService userService;
+    private boolean status;
    public UserSession(Context context){
        this.context = context;
-       this.mainActivity = new MainActivity();
        this.profile = new Profile();
        this.session = new SessionManager(context);
        this.pDialog = new ProgressDialog(context);
        this.userService = new UserService();
    }
-   public void getUser(final String token){
+   public boolean getUser(final String token){
+       final int[] ok = {0};
        showDialog();
        pDialog.setMessage(""+ context.getResources().getString(R.string.waitphone));
        String tag_string_req = "req_userdatas";
@@ -55,6 +56,7 @@ public class UserSession  {
                    ObjectMapper  objectMapper = new ObjectMapper();
                    User userUpdated = objectMapper.readValue(response, User.class);
                    userService.updateUser(userUpdated);
+                   ok[0] = 1;
                } catch (IOException e) {
                    e.printStackTrace();
                }
@@ -64,8 +66,9 @@ public class UserSession  {
            @Override
            public void onErrorResponse(VolleyError error) {
                Toast.makeText(context,
-                      "*************************"+ error.getMessage(), Toast.LENGTH_LONG).show();
+                      ""+ error.getMessage(), Toast.LENGTH_LONG).show();
                hideDialog();
+               ok[0] = 0;
            }
        }) {
 
@@ -77,22 +80,23 @@ public class UserSession  {
                return params;
 
            }
-
-
-
        };
 
        // Adding request to request queue
        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-
+       if (ok[0]==1){
+           return false;
+       }else {
+           return true;
+       }
    }
-    public void logoutUser() {
+    public void logoutUser(Activity activity) {
         session.setLogin(false);
         // Launching the login activity
         userService.deleteUser();
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(activity, LoginActivity.class);
         context.startActivity(intent);
-        mainActivity.finish();
+        activity.finish();
     }
     public void updateUser(final String token, final String name, final String username, final String filePath){
         showDialog();
@@ -159,7 +163,7 @@ public class UserSession  {
 
             @Override
             public void onResponse(String response) {
-
+                Toast.makeText(context, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
 
@@ -188,4 +192,5 @@ public class UserSession  {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
 
     }
+
 }

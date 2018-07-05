@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="permissionbuttonmarginbottom">35dp</dimen>
     <dimen name="login_et_margin">30dp</dimen>
+    <dimen name="retrybuttonmarginbottom">100dp</dimen>
+    <dimen name="round_button_log_screen">16dp</dimen>
+    <dimen name="edit_margin">10dp</dimen>
 </resources>

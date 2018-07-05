@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.krintos.timetrackerai.Models.User;
@@ -23,8 +24,8 @@ import com.krintos.timetrackerai.R;
 import com.krintos.timetrackerai.Services.UserService;
 import com.krintos.timetrackerai.SessionManager.UserSession;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,14 +35,12 @@ import static android.app.Activity.RESULT_OK;
 public class Profile extends Fragment {
     private final int PICK_IMAGE_REQUEST = 1;
     private UserSession us;
-    private Button logout, namechange, usernamechange,select;
-    private ImageView image;
-    private EditText name, username;
+    private TextView name, username, phonenumber;
+    private Button logout;
+    private CircleImageView profilepicture;
     private UserService userService;
-    private String imagePath;
-    private int column_index;
+    private UserSession client;
     private Bitmap bitmap;
-
     public Profile() {
         // Required empty public constructor
 
@@ -54,16 +53,16 @@ public class Profile extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         userService = new UserService();
+        client = new UserSession(getContext());
         us = new UserSession(getContext());
         logout = rootView.findViewById(R.id.logout);
         name = rootView.findViewById(R.id.name);
         username = rootView.findViewById(R.id.username);
-        namechange = rootView.findViewById(R.id.namechange);
-        usernamechange = rootView.findViewById(R.id.usernamechange);
-        select = rootView.findViewById(R.id.imagepicker);
+        phonenumber = rootView.findViewById(R.id.phonenumber);
+        setuserdatas();
 
-        image = rootView.findViewById(R.id.pimage);
-        namechange.setOnClickListener(new View.OnClickListener() {
+
+        /*namechange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String  gname = name.getText().toString().trim();
@@ -89,23 +88,35 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.setType("image/*");
+                    intent.setType("image*//*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picure"), PICK_IMAGE_REQUEST);
 
             }
-        });
+        });*/
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                us.logoutUser();
+                us.logoutUser(getActivity());
             }
         });
         return rootView;
     }
 
-    @Override
+    private void setuserdatas() {
+        boolean status = client.getUser(userService.getUser().getToken());
+            if (status) {
+                name.setText(userService.getUser().getName());
+                phonenumber.setText(userService.getUser().getPhoneNumber());
+                username.setText(userService.getUser().getUserName());
+                client.getUserPhoto(userService.getUser().getToken());
+            }else {
+                Toast.makeText(getContext(), ""+getString(R.string.oops), Toast.LENGTH_SHORT).show();
+            }
+    }
+
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -133,5 +144,5 @@ public class Profile extends Fragment {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-
+*/
 }
