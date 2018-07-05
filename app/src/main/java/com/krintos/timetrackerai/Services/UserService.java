@@ -28,6 +28,7 @@ public class UserService {
         User user = (User) new Select().from(User.class).execute().get(0);
         user.setUserName(userUpdated.getUserName());
         user.setName(userUpdated.getName());
+        user.setPicName(userUpdated.getPicName());
         user.save();
     }
 

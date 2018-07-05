@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,7 +17,6 @@ import com.krintos.timetrackerai.LoginActivity;
 import com.krintos.timetrackerai.MainActivity;
 import com.krintos.timetrackerai.R;
 import com.krintos.timetrackerai.Services.UserService;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +94,7 @@ public class UserSession  {
         context.startActivity(intent);
         mainActivity.finish();
     }
-    public void updateUser(final String token, final String name, final String username){
+    public void updateUser(final String token, final String name, final String username, final String filePath){
         showDialog();
         pDialog.setMessage(""+ context.getResources().getString(R.string.waitphone));
         String tag_string_req = "req_update_user";
@@ -121,8 +117,6 @@ public class UserSession  {
                 hideDialog();
             }
         }) {
-
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -133,11 +127,12 @@ public class UserSession  {
                 if (!username.equals("null")){
                     params.put("username", username );
                 }
+                if (!filePath.equals("null")){
+                    params.put("imageBytes",filePath);
+                }
                 return params;
 
             }
-
-
 
         };
 
@@ -153,5 +148,44 @@ public class UserSession  {
     public void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+    public void getUserPhoto(final String token){
+        showDialog();
+        pDialog.setMessage(""+ context.getResources().getString(R.string.waitphone));
+        String tag_string_req = "req_userdatas";
+
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                AppConfig.URL_GETUSERPHOTO+userService.getUser().getPicName(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,
+                        "*************************"+ error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", token );
+                return params;
+
+            }
+
+
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
     }
 }

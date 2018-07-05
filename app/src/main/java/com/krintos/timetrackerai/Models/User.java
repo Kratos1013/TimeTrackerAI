@@ -19,6 +19,20 @@ public class User extends Model{
     private String phoneNumber;
     @Column(name = "token")
     private String token;
+
+
+    @Column(name = "picName")
+    private String picName;
+
+    public String getPicName() {
+        return picName;
+    }
+
+    public void setPicName(String picName) {
+        this.picName = picName;
+    }
+
+
     public User(){
 
     }
