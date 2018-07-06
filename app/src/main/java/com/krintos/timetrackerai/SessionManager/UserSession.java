@@ -18,6 +18,9 @@ import com.krintos.timetrackerai.LoginActivity;
 import com.krintos.timetrackerai.R;
 import com.krintos.timetrackerai.Services.UserService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +45,6 @@ public class UserSession  {
    }
    public boolean getUser(final String token){
        final int[] ok = {0};
-       showDialog();
-       pDialog.setMessage(""+ context.getResources().getString(R.string.waitphone));
        String tag_string_req = "req_userdatas";
 
        StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -52,7 +53,6 @@ public class UserSession  {
            @Override
            public void onResponse(String response) {
                try {
-                   hideDialog();
                    ObjectMapper  objectMapper = new ObjectMapper();
                    User userUpdated = objectMapper.readValue(response, User.class);
                    userService.updateUser(userUpdated);
@@ -67,7 +67,6 @@ public class UserSession  {
            public void onErrorResponse(VolleyError error) {
                Toast.makeText(context,
                       ""+ error.getMessage(), Toast.LENGTH_LONG).show();
-               hideDialog();
                ok[0] = 0;
            }
        }) {
@@ -98,9 +97,8 @@ public class UserSession  {
         context.startActivity(intent);
         activity.finish();
     }
-    public void updateUser(final String token, final String name, final String username, final String filePath){
-        showDialog();
-        pDialog.setMessage(""+ context.getResources().getString(R.string.waitphone));
+    public boolean updateUser(final String token, final String name, final String username, final String filePath){
+        final int[] ok = {0};
         String tag_string_req = "req_update_user";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -110,15 +108,16 @@ public class UserSession  {
             public void onResponse(String response) {
             getUser(userService.getUser().getToken());
                 Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                ok[0] = 1;
+
             }
+
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,
-                        ""+ error.getMessage(), Toast.LENGTH_LONG).show();
+                ok[0] = 0;
 
-                hideDialog();
             }
         }) {
             @Override
@@ -142,7 +141,11 @@ public class UserSession  {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-
+        if (ok[0]==1){
+            return false;
+        }else {
+            return true;
+        }
     }
     public void showDialog() {
         if (!pDialog.isShowing())

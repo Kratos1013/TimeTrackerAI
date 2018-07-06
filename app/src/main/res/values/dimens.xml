@@ -7,4 +7,5 @@
     <dimen name="retrybuttonmarginbottom">100dp</dimen>
     <dimen name="round_button_log_screen">16dp</dimen>
     <dimen name="edit_margin">10dp</dimen>
+    <dimen name="profile_datas_margin">10dp</dimen>
 </resources>

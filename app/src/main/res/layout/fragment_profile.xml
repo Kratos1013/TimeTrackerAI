@@ -1,10 +1,21 @@
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/refresh"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.krintos.timetrackerai.Fragments.Profile">
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_marginTop="@dimen/login_et_margin"
         android:id="@+id/profile_photo"
@@ -12,15 +23,9 @@
         android:src="@drawable/nophoto"
         android:layout_width="115dp"
         android:layout_height="115dp" />
-    <TextView
-        android:layout_gravity="center"
-        android:id="@+id/edit"
-        android:text="@string/edit"
-        android:layout_margin="@dimen/edit_margin"
-        android:background="@drawable/retrybutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
     <LinearLayout
+        android:layout_marginTop="@dimen/profile_datas_margin"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -37,6 +42,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="@dimen/profile_datas_margin"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -53,10 +59,19 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView
+        android:layout_marginTop="@dimen/profile_datas_margin"
         android:id="@+id/phonenumber"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/edit_enable"
+            android:text="@string/edit"
+            android:layout_margin="@dimen/edit_margin"
+            android:background="@drawable/retrybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     <Button
         android:id="@+id/logout"
         android:text="LogOut"
@@ -65,5 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    </LinearLayout>
+    </ScrollView>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

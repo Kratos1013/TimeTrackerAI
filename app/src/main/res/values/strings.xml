@@ -23,4 +23,13 @@
     <string name="oops">Ooops, something went wrong</string>
     <string name="retry">Retry</string>
     <string name="edit">EDIT</string>
+    <string name="name">Name</string>
+    <string name="edit_name">Enter name</string>
+    <string name="edit_username">Enter username</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
+    <string name="emptyname">Please enter your name</string>
+    <string name="emptyusername">Please enter username</string>
+    <string name="open">Open</string>
+    <string name="upload">Upload</string>
 </resources>

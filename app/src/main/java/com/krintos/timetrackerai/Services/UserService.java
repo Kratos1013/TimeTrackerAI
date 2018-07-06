@@ -26,7 +26,7 @@ public class UserService {
     }
     public void updateUser(User userUpdated){
         User user = (User) new Select().from(User.class).execute().get(0);
-        user.setUserName(userUpdated.getUserName());
+        user.setusername(userUpdated.getusername());
         user.setName(userUpdated.getName());
         user.setPicName(userUpdated.getPicName());
         user.save();

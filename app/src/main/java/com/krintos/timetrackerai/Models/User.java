@@ -14,7 +14,7 @@ public class User extends Model{
     @Column(name = "name")
     private String name;
     @Column(name = "username")
-    private String userName;
+    private String username;
     @Column(name = "phoneNumber")
     private String phoneNumber;
     @Column(name = "token")
@@ -55,12 +55,12 @@ public class User extends Model{
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getusername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setusername(String username) {
+        this.username = username;
     }
 
     public String getPhoneNumber() {

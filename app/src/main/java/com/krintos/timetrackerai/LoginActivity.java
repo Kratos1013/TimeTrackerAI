@@ -156,7 +156,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     String pin = jObj.getString("pincode");
                     pincode.setText(pin);
-                    Toast.makeText(LoginActivity.this, ""+pin, Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
