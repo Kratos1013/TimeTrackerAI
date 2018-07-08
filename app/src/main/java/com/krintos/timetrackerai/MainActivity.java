@@ -2,9 +2,7 @@ package com.krintos.timetrackerai;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +15,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
-import com.krintos.timetrackerai.Fragments.Dashboard;
-import com.krintos.timetrackerai.Fragments.Profile;
-import com.krintos.timetrackerai.Fragments.Statistics;
+import com.krintos.timetrackerai.MainMenu.Dashboard;
+import com.krintos.timetrackerai.MainMenu.Profile;
+import com.krintos.timetrackerai.MainMenu.Statistics;
 import com.krintos.timetrackerai.Permissions.Permissions;
 import com.krintos.timetrackerai.SessionManager.SessionManager;
 import com.krintos.timetrackerai.SessionManager.UserSession;
@@ -38,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.dashboard:
-                    if(fragmentManager.findFragmentByTag("dashbord") != null) {
+                    Fragment dashboard;
+                    dashboard = new Dashboard();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_main, dashboard,"dashboard");
+                    ft.commit();
+                    /*if(fragmentManager.findFragmentByTag("dashbord") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("dashboard")).commit();
                     } else {
                         fragmentManager.beginTransaction().add(R.id.content_main, new Dashboard(), "dashboard").commit();
@@ -48,11 +51,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(fragmentManager.findFragmentByTag("profile") != null){
                         fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("profile")).commit();
-                    }
+                    }*/
 
                     return true;
                 case R.id.statistics:
-                    if(fragmentManager.findFragmentByTag("statistics") != null) {
+                    Fragment statistics;
+                    statistics = new Statistics();
+                    FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                    ft1.replace(R.id.content_main, statistics,"statistics");
+                    ft1.commit();
+                    /*if(fragmentManager.findFragmentByTag("statistics") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("statistics")).commit();
                     } else {
                         fragmentManager.beginTransaction().add(R.id.content_main, new Statistics(), "statistics").commit();
@@ -62,10 +70,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(fragmentManager.findFragmentByTag("profile") != null){
                         fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("profile")).commit();
-                    }
+                    }*/
                     return true;
                 case R.id.profile:
-                    if(fragmentManager.findFragmentByTag("profile") != null) {
+                    Fragment profile;
+                    profile = new Profile();
+                    FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                    ft2.replace(R.id.content_main, profile,"profile");
+                    ft2.commit();
+                    /*if(fragmentManager.findFragmentByTag("profile") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("profile")).commit();
                     } else {
                         fragmentManager.beginTransaction().add(R.id.content_main, new Profile(), "profile").commit();
@@ -75,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(fragmentManager.findFragmentByTag("dashboard") != null){
                         fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("dashboard")).commit();
-                    }
+                    }*/
                     return true;
             }
             return false;

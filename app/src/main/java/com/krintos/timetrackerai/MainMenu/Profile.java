@@ -1,4 +1,4 @@
-package com.krintos.timetrackerai.Fragments;
+package com.krintos.timetrackerai.MainMenu;
 
 
 import android.app.AlertDialog;
@@ -101,7 +101,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                         phonenumber.setText(userService.getUser().getPhoneNumber());
                         username.setText(userService.getUser().getusername());
                     }
-                }, 1000);
+                }, 100);
     }
     @Override
     public void onClick(View view) {

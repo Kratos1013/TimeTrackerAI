@@ -1,9 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.krintos.timetrackerai.Fragments.Dashboard">
+    tools:context="com.krintos.timetrackerai.MainMenu.Dashboard">
+    <Button
+        android:id="@+id/plans"
+        android:text="@string/plans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
-
-</FrameLayout>
+</LinearLayout>

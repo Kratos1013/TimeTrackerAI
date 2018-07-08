@@ -32,4 +32,15 @@
     <string name="emptyusername">Please enter username</string>
     <string name="open">Open</string>
     <string name="upload">Upload</string>
+    <string name="plans">Plans</string>
+
+
+    <string name="mon">Monday</string>
+    <string name="tue">Tuesday</string>
+    <string name="wed">Wednesday</string>
+    <string name="thu">Thursday</string>
+    <string name="fri">Friday</string>
+    <string name="sat">Saturday</string>
+    <string name="sun">Sunday</string>
+
 </resources>

@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.krintos.timetrackerai.MainActivity">
+
     <FrameLayout
         android:id="@+id/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="56dp">
 
     </FrameLayout>
 
