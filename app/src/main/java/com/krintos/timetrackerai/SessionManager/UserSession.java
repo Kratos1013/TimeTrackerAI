@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,10 +19,6 @@ import com.krintos.timetrackerai.Models.User;
 import com.krintos.timetrackerai.LoginActivity;
 import com.krintos.timetrackerai.R;
 import com.krintos.timetrackerai.Services.UserService;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +33,6 @@ public class UserSession  {
     private SessionManager session;
     private ProgressDialog pDialog;
     private UserService userService;
-    private boolean status;
    public UserSession(Context context){
        this.context = context;
        this.profile = new Profile();
@@ -43,51 +40,42 @@ public class UserSession  {
        this.pDialog = new ProgressDialog(context);
        this.userService = new UserService();
    }
-   public boolean getUser(final String token){
-       final int[] ok = {0};
+   public void getUser(final String token, final SwipeRefreshLayout view){
+       view.setRefreshing(true);
        String tag_string_req = "req_userdatas";
-
        StringRequest strReq = new StringRequest(Request.Method.POST,
                AppConfig.URL_GETUSER, new Response.Listener<String>() {
-
            @Override
            public void onResponse(String response) {
                try {
                    ObjectMapper  objectMapper = new ObjectMapper();
                    User userUpdated = objectMapper.readValue(response, User.class);
                    userService.updateUser(userUpdated);
-                   ok[0] = 1;
+                   view.setRefreshing(false);
+
                } catch (IOException e) {
                    e.printStackTrace();
                }
            }
        }, new Response.ErrorListener() {
-
            @Override
            public void onErrorResponse(VolleyError error) {
+               view.setRefreshing(false);
                Toast.makeText(context,
                       ""+ error.getMessage(), Toast.LENGTH_LONG).show();
-               ok[0] = 0;
            }
        }) {
-
-
            @Override
            protected Map<String, String> getParams() {
                Map<String, String> params = new HashMap<String, String>();
                params.put("token", token );
                return params;
-
            }
        };
 
        // Adding request to request queue
        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-       if (ok[0]==1){
-           return false;
-       }else {
-           return true;
-       }
+
    }
     public void logoutUser(Activity activity) {
         session.setLogin(false);
@@ -97,8 +85,9 @@ public class UserSession  {
         context.startActivity(intent);
         activity.finish();
     }
-    public boolean updateUser(final String token, final String name, final String username, final String filePath){
-        final int[] ok = {0};
+    public void updateUser(final String token, final String name, final String username, final String imageBytes,
+                           final SwipeRefreshLayout view ){
+        view.setRefreshing(true);
         String tag_string_req = "req_update_user";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -106,9 +95,8 @@ public class UserSession  {
 
             @Override
             public void onResponse(String response) {
-            getUser(userService.getUser().getToken());
-                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
-                ok[0] = 1;
+            getUser(userService.getUser().getToken(),view);
+                view.setRefreshing(false);
 
             }
 
@@ -116,7 +104,7 @@ public class UserSession  {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ok[0] = 0;
+                view.setRefreshing(false);
 
             }
         }) {
@@ -126,26 +114,18 @@ public class UserSession  {
                 params.put("token", token );
                 if (!name.equals("null")){
                     params.put("name", name );
-                }
-                if (!username.equals("null")){
+                }else if (!username.equals("null")){
                     params.put("username", username );
-                }
-                if (!filePath.equals("null")){
-                    params.put("imageBytes",filePath);
+                }else {
+                    params.put("imageBytes", imageBytes);
                 }
                 return params;
 
             }
 
         };
-
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-        if (ok[0]==1){
-            return false;
-        }else {
-            return true;
-        }
     }
     public void showDialog() {
         if (!pDialog.isShowing())

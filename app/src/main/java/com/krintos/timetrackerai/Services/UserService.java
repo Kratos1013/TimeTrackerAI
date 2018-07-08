@@ -2,6 +2,7 @@ package com.krintos.timetrackerai.Services;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.krintos.timetrackerai.Fragments.Profile;
 import com.krintos.timetrackerai.Models.User;
 
 /**
@@ -30,6 +31,7 @@ public class UserService {
         user.setName(userUpdated.getName());
         user.setPicName(userUpdated.getPicName());
         user.save();
+
     }
 
     public void deleteUser() {

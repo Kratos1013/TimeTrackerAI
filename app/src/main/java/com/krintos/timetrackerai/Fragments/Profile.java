@@ -91,25 +91,17 @@ public class Profile extends Fragment implements View.OnClickListener {
         return rootView;
     }
     private void refreshed() {
-        refresh.setRefreshing(true);
-        boolean status = client.getUser(userService.getUser().getToken());
-            if (status) {
-                final Handler handler = new Handler();
+        client.getUser(userService.getUser().getToken(),refresh);
+        final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //Do something after 100ms
+                        //Do something after 1000ms
                         name.setText(userService.getUser().getName());
                         phonenumber.setText(userService.getUser().getPhoneNumber());
                         username.setText(userService.getUser().getusername());
-                        refresh.setRefreshing(false);
                     }
                 }, 1000);
-
-            }else {
-                refresh.setRefreshing(false);
-                Toast.makeText(getContext(), ""+getString(R.string.oops), Toast.LENGTH_SHORT).show();
-            }
     }
     @Override
     public void onClick(View view) {
@@ -161,6 +153,8 @@ public class Profile extends Fragment implements View.OnClickListener {
 
         popup.show(); //showing popup menu
     }
+
+
     private void edit(final String name, final String username, final int type) {
         String title = null;
         String hint = null;
@@ -186,40 +180,14 @@ public class Profile extends Fragment implements View.OnClickListener {
                 if (type==1){
                     String newname = editText.getText().toString().trim();
                     if (!newname.isEmpty()){
-                       boolean status = client.updateUser(userService.getUser().getToken(),newname,username,"null");
-                       if (status){
-                           final Handler handler = new Handler();
-                           handler.postDelayed(new Runnable() {
-                               @Override
-                               public void run() {
-                                   //Do something after 100ms
-                                   refreshed();
-                               }
-                           }, 1000);
-                           dialog.cancel();
-                       }else {
-                           Toast.makeText(getActivity(), ""+getString(R.string.oops), Toast.LENGTH_SHORT).show();
-                       }
+                        client.updateUser(userService.getUser().getToken(),newname,username,"null",refresh);
                     }else {
                         Toast.makeText(getActivity(), ""+getString(R.string.emptyname), Toast.LENGTH_SHORT).show();
                     }
                 }if (type == 2){
                     String newusername = editText.getText().toString().trim();
                     if (!newusername.equals("")){
-                       boolean status = client.updateUser(userService.getUser().getToken(),name,newusername,"null");
-                       if (status) {
-                           final Handler handler = new Handler();
-                           handler.postDelayed(new Runnable() {
-                               @Override
-                               public void run() {
-                                   //Do something after 100ms
-                                   refreshed();
-                               }
-                           }, 1000);
-                           dialog.cancel();
-                       }else {
-                           Toast.makeText(getActivity(), ""+getString(R.string.oops), Toast.LENGTH_SHORT).show();
-                       }
+                       client.updateUser(userService.getUser().getToken(),name,newusername,"null",refresh);
                     }else {
                         Toast.makeText(getActivity(), ""+getString(R.string.emptyusername), Toast.LENGTH_SHORT).show();
                     }
@@ -252,10 +220,8 @@ public class Profile extends Fragment implements View.OnClickListener {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 //uploading the image
                 profilepicture.setImageBitmap(bitmap);
-                String  guname = "null";
-                String  gname = "null";
-                us.updateUser(userService.getUser().getToken(),gname,
-                        guname,getStringImage(bitmap));
+                us.updateUser(userService.getUser().getToken(),"null",
+                        "null",getStringImage(bitmap),refresh);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -264,7 +230,7 @@ public class Profile extends Fragment implements View.OnClickListener {
     }
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 50, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
