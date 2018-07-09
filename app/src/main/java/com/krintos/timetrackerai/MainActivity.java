@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     dashboard = new Dashboard();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content_main, dashboard,"dashboard");
+                    ft.addToBackStack("dashboard");
                     ft.commit();
                     /*if(fragmentManager.findFragmentByTag("dashbord") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("dashboard")).commit();
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     statistics = new Statistics();
                     FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
                     ft1.replace(R.id.content_main, statistics,"statistics");
+                    ft1.addToBackStack("statistics");
                     ft1.commit();
                     /*if(fragmentManager.findFragmentByTag("statistics") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("statistics")).commit();
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     profile = new Profile();
                     FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                     ft2.replace(R.id.content_main, profile,"profile");
+                    ft2.addToBackStack("profile");
                     ft2.commit();
                     /*if(fragmentManager.findFragmentByTag("profile") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("profile")).commit();

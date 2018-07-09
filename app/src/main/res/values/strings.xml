@@ -42,5 +42,9 @@
     <string name="fri">Friday</string>
     <string name="sat">Saturday</string>
     <string name="sun">Sunday</string>
+    <string name="start">START</string>
+    <string name="finish">FINISH</string>
+    <string name="notification">Notification</string>
+    <string name="before">Before</string>
 
 </resources>

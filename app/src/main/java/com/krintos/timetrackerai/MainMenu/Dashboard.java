@@ -41,6 +41,7 @@ public class Dashboard extends Fragment implements View.OnClickListener {
                 planner = new Planner();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_main, planner,"planner0");
+                ft.addToBackStack("planner0");
                 ft.commit();
                 break;
         }

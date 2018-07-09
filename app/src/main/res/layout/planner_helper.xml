@@ -12,7 +12,9 @@
     </ListView>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add"
         android:layout_gravity="bottom|end"
         android:layout_width="wrap_content"
+        android:layout_margin="@dimen/floating_margin"
         android:layout_height="wrap_content" />
 </FrameLayout>

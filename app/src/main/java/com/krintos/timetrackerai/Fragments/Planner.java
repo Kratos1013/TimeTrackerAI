@@ -1,27 +1,20 @@
 package com.krintos.timetrackerai.Fragments;
-
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.ListView;
+import com.krintos.timetrackerai.Fragments.Helper.add_to_planner;
 import com.krintos.timetrackerai.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Planner extends Fragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -58,19 +51,11 @@ public class Planner extends Fragment {
     }
 
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -78,13 +63,29 @@ public class Planner extends Fragment {
             fragment.setArguments(args);
             return fragment;
         }
-
+        private FloatingActionButton add;
+        private ListView listView;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.planner_helper, container, false);
-            int position = getArguments().getInt(ARG_SECTION_NUMBER);
-
+            final int  position = getArguments().getInt(ARG_SECTION_NUMBER);
+            add = rootView.findViewById(R.id.add);
+            listView = rootView.findViewById(R.id.listview);
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment add;
+                    add = new add_to_planner();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_main, add,"add_to_planner");
+                    Bundle args = new Bundle();
+                    args.putInt(ARG_SECTION_NUMBER, position);
+                    add.setArguments(args);
+                    ft.addToBackStack("add_to_planner");
+                    ft.commit();
+                }
+            });
             return rootView;
         }
     }
