@@ -19,7 +19,7 @@ public class Helper {
     public Helper(Context context){
         this.context = context;
     }
-    public List<CarouselPicker.PickerItem> getIcons(){
+    public List<CarouselPicker.PickerItem> getIconsForCarousel(){
         for (int i = 0; i<3; i++){
             int id = context.getResources().getIdentifier("icon"+i,"drawable",context.getPackageName());
             images.add(new CarouselPicker.DrawableItem(id));

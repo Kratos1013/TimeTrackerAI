@@ -21,6 +21,26 @@ public class Weeks extends Model {
     private String fTime;
     @Column(name = "icon")
     private String icon;
+    @Column(name = "notification")
+    private String notification;
+    @Column(name = "ntime")
+    private String ntime;
+
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
+
+    public String getNtime() {
+        return ntime;
+    }
+
+    public void setNtime(String ntime) {
+        this.ntime = ntime;
+    }
 
     public String getDays() {
         return days;

@@ -46,5 +46,6 @@
     <string name="finish">FINISH</string>
     <string name="notification">Notification</string>
     <string name="before">Before</string>
+    <string name="emptytask">Task can not be empty</string>
 
 </resources>

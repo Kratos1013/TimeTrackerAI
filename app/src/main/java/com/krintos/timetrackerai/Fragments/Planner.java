@@ -11,15 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.krintos.timetrackerai.Adapters.PlannerAdapter;
 import com.krintos.timetrackerai.Fragments.Helper.add_to_planner;
+import com.krintos.timetrackerai.Helper.Helper;
+import com.krintos.timetrackerai.Models.Weeks;
 import com.krintos.timetrackerai.R;
+import com.krintos.timetrackerai.Services.PlannerService;
+
 import java.util.ArrayList;
 import java.util.List;
 public class Planner extends Fragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
-
+    private Helper helper;
     public Planner() {
         // Required empty public constructor
     }
@@ -30,8 +36,9 @@ public class Planner extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_planner, container, false);
-        mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        mViewPager = rootView.findViewById(R.id.viewpager);
+        tabLayout =  rootView.findViewById(R.id.tabs);
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
         setupViewPager(mViewPager);
         tabLayout.setupWithViewPager(mViewPager);
@@ -65,13 +72,18 @@ public class Planner extends Fragment {
         }
         private FloatingActionButton add;
         private ListView listView;
+        private Helper helper;
+        private PlannerService db;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.planner_helper, container, false);
             final int  position = getArguments().getInt(ARG_SECTION_NUMBER);
+            helper = new Helper(getContext());
+            db = new PlannerService();
             add = rootView.findViewById(R.id.add);
             listView = rootView.findViewById(R.id.listview);
+            setUpListView(helper.getday(position));
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,6 +100,27 @@ public class Planner extends Fragment {
             });
             return rootView;
         }
+
+        private void setUpListView(String day) {
+            List<Weeks> datas = db.getByDay(day);
+            ArrayList<String > task = new ArrayList<>();
+            ArrayList<String > stime = new ArrayList<>();
+            ArrayList<String > ftime = new ArrayList<>();
+            ArrayList<String > icon = new ArrayList<>();
+            ArrayList<String > ntime = new ArrayList<>();
+            int size = datas.size();
+            for (int i =0; i<size;i++){
+                task.add(datas.get(i).getTask());
+                stime.add(datas.get(i).getsTime());
+                ftime.add(datas.get(i).getfTime());
+                icon.add(datas.get(i).getIcon());
+                ntime.add(datas.get(i).getNtime());
+            }
+            PlannerAdapter plannerAdapter = new PlannerAdapter(getActivity(),task,stime,ftime,icon,ntime);
+            plannerAdapter.notifyDataSetChanged();
+            listView.setAdapter(plannerAdapter);
+        }
+
     }
 
 
